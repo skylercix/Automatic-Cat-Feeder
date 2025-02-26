@@ -16,7 +16,7 @@ It allows the scheduling of food distribution at specific time intervals, ensuri
 * 1 x DC jack
 * 3 x Buttons
 
-# Electrical schematic
+# Schematic
 ![image](https://github.com/user-attachments/assets/320997e0-1239-4d9a-be81-126231bc5b23)
 
 # Logical Code Diagram 
