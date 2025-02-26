@@ -15,6 +15,13 @@ It allows the scheduling of food distribution at specific time intervals, ensuri
 * 1 x 12V DC adapter
 * 1 x DC jack
 * 3 x Buttons
+* M3 insertion nuts
+* M3 threaded rod
+* M3 nuts
+
+# 3D Printed Parts
+![image](https://github.com/user-attachments/assets/fb4fd157-a7c8-4c94-b133-330533d8080e)
+
 
 # Schematic
 ![image](https://github.com/user-attachments/assets/320997e0-1239-4d9a-be81-126231bc5b23)
