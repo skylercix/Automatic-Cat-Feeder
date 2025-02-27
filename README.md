@@ -29,6 +29,12 @@ It allows the scheduling of food distribution at specific time intervals, ensuri
 # Logical Code Diagram 
 ![image](https://github.com/user-attachments/assets/c7fe2ac7-7507-428b-8bd3-0481d96cac1b)
 
+# !Important!
+    //rtc.setDOW(THURSDAY);            
+    //rtc.setTime(18, 03, 0);         
+    //rtc.setDate(27, 02, 2024);      
+The first time you upload the code, remove the comment from the lines above. Set the date and time to the correct values. After that, comment out those lines again and re-upload the code. This step is only needed once.
+
 # Future Improvement Areas
 There are several aspects that can be improved:
 * Implementing a scale to adjust the desired amount of food
