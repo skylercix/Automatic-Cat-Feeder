@@ -39,7 +39,7 @@ const int portion_delay = 400;
 int Hour, Minute;
 int last_feed_hour = 1;
 int next_feed_hour = 1;
-bool feed_active = false;
+bool feed_active = true;
 
 // Loop refresh rate
 const int refresh_rate = 200;
@@ -71,6 +71,9 @@ void setup() {
     
     // Initialize RTC module
     rtc.begin();
+    //rtc.setDOW(THURSDAY);            // Set Day-of-Week to THURSDAY
+    //rtc.setTime(18, 03, 0);         // Set the time to 18:03:00 (24hr format)
+    //rtc.setDate(27, 02, 2024);       // Set the date to February 27th, 2014
     
     // Load last and next feeding times from EEPROM
     last_feed_hour = EEPROM.read(2);
@@ -109,11 +112,13 @@ void loop() {
     Serial.println(Hour); // Debugging output
 
     // Check if it's time to feed
-    if (Hour == next_feed_hour) {
-        feed_active = true;
-        last_feed_hour = Hour;
-        next_feed_hour = (Hour + interval) % 24; // Ensure it wraps correctly
-        
+    if(Hour == next_feed_hour){                 
+    feed_active = true;
+    last_feed_hour = Hour;
+    next_feed_hour = Hour + interval;         
+    if(next_feed_hour >= 23){                 
+      next_feed_hour = next_feed_hour - 24;   
+    }
         EEPROM.write(2, last_feed_hour);
         EEPROM.write(3, next_feed_hour);
         
@@ -136,37 +141,47 @@ void loop() {
         feed_active = false;
     }
 
-    // Handle button presses
-    handleButtons();
+
+
+      //Button1 (increase portions)   
+  if(!digitalRead(but1) && state_but1){
+    portions++;
+    if(portions > max_portions){          
+      portions = min_portions;
+    }
+    state_but1 = false;
+  }
+  else if(digitalRead(but1) && !state_but1){
+    state_but1 = true;
+  }
+
+    //Button2 (Manual feed) 
+  if(!digitalRead(but2) && state_but2){    
+    EEPROM.write(2, Hour);
     
-    delay(1000); // Prevents excessive processing
-}
-
-void handleButtons() {
-    // Button1: Increase portions
-    if (!digitalRead(but1) && state_but1) {
-        portions = (portions >= max_portions) ? min_portions : portions + 1;
-        state_but1 = false;
-    } else if (digitalRead(but1)) {
-        state_but1 = true;
-    }
-
-    // Button2: Manual feed trigger
-    if (!digitalRead(but2) && state_but2) {
-        EEPROM.write(2, Hour);
-        next_feed_hour = (Hour + interval) % 24;
-        EEPROM.write(3, next_feed_hour);
-        feed_active = true;
-        state_but2 = false;
-    } else if (digitalRead(but2)) {
-        state_but2 = true;
-    }
+    next_feed_hour = Hour + interval;
+    if(next_feed_hour >= 23){
+      next_feed_hour = next_feed_hour - 24;
+    }    
+    EEPROM.write(3, next_feed_hour);
+    
+    feed_active = true;
+    state_but2 = false;
+  }
+  else if(digitalRead(but2) && !state_but2){
+    state_but2 = true;
+  }
 
     // Button3: Increase feeding interval
-    if (!digitalRead(but3) && state_but3) {
-        interval = (interval >= 23) ? 1 : interval + 1;
-        state_but3 = false;
-    } else if (digitalRead(but3)) {
-        state_but3 = true;
+   if(!digitalRead(but3) && state_but3){
+    interval++;
+    if(interval > 23){
+      interval = 1;
     }
+    state_but3 = false;
+  }
+  else if(digitalRead(but3) && !state_but3){
+    state_but3 = true;
+  }  
 }
+
