@@ -1,9 +1,11 @@
 # Automatic-Cat-Feeder
 ![image](https://github.com/user-attachments/assets/356bdb61-3e9a-473a-82d0-7b36fbde27ca)
 
-# Introduction
+# Project Overview
 The purpose of this project is to create an automatic pet feeder for cats. The device is built using a 3D printer and controlled by an Arduino microcontroller.
 It allows the scheduling of food distribution at specific time intervals, ensuring the cat is fed regularly even when the owner is not at home.
+
+This project is inspired by [Electronoobs](http://electronoobs.com/eng_arduino_tut163.php). The main differences in my implementation are that instead of an OLED display, I used a 2x16 I2C LCD screen, so the code I used is different from the one in the original project. Additionally, I used a different buck converter, as I encountered issues with the one suggested in the original project.
 
 # Components
 * 1 x [MG995 Servo](https://www.robofun.ro/mecanice/servomotor-mg995.html)
